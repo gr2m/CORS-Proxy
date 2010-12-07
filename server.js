@@ -1,22 +1,31 @@
-var http = require('http');
-
-http.createServer(function(request, response) {
-  if (request.method == 'OPTIONS') {
-    console.log('OPTIONS request: sending cors headers.');
-    
-    response.writeHead(200, {
+var http = require('http'),
+    cors_headers = {
       'Access-Control-Allow-Origin'  : '*',
       'Access-Control-Allow-Methods' : 'POST, GET, PUT, DELETE, OPTIONS',
       'Access-Control-Max-Age'       : '86400', // 24 hours
-      'Access-Control-Allow-Headers' : 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, X-MiteApiKey'
-    });
+      'Access-Control-Allow-Headers' : 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
+    };
+
+// add passed extra headers
+for (var i=2; i < process.argv.length; i++) {
+  cors_headers['Access-Control-Allow-Headers'] += ', ' + process.argv[i];
+};
+
+http.createServer(function(request, response) {
+  if (request.method == 'OPTIONS') {
+    console.log('OPTIONS request: sending cors headers only.');
+    response.writeHead(204, cors_headers);
     response.end();
     return;
   }
-    
-  var proxy = http.createClient(80, request.headers['host'].replace(/\:.*$/,''));
   
-  console.log(request.method, request.url);
+  request.headers['host']  = request.headers['host']
+                             // remove port
+                             .replace(/\:.*$/,'')
+                             // proxy.example.com => example.com
+                             .replace(/proxy\./,'');
+  var proxy = http.createClient(80, request.headers['host']);
+  console.log(request.method, request.headers['host'] + request.url);
   var proxy_request = proxy.request(request.method, request.url, request.headers);
   proxy_request.addListener('response', function (proxy_response) {
     proxy_response.addListener('data', function(chunk) {
@@ -25,7 +34,11 @@ http.createServer(function(request, response) {
     proxy_response.addListener('end', function() {
       response.end();
     });
-    response.writeHead(proxy_response.statusCode, proxy_response.headers);
+    var headers = proxy_response.headers;
+    for (name in cors_headers) {
+      headers[name] = cors_headers[name];
+    }
+    response.writeHead(proxy_response.statusCode, headers);
   });
   request.addListener('data', function(chunk) {
     proxy_request.write(chunk, 'binary');
@@ -33,4 +46,4 @@ http.createServer(function(request, response) {
   request.addListener('end', function() {
     proxy_request.end();
   });
-}).listen(8080);
+}).listen(process.env.PORT || 8080);
