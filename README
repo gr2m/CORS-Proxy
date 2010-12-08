@@ -14,11 +14,13 @@ USAGE
 3. That's it
 
 
-CUSTOM HEADERS
+CUSTOM HEADERS & HOST
 
 In case you need to be able to send custome headers, pass them as SPACE-separated argument list:
 $ node server.js X-FunkyappApiKey X-SecretStuff
 
+If you need to specify a custom Domain, just add id as another argument, like:
+$ node server.js X-FunkyappApiKey X-SecretStuff custom.domain.com
 
 CORS?
 
