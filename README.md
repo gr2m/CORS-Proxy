@@ -1,5 +1,8 @@
 ## start the cors proxy
 
+$ git clone git://github.com/gr2m/CORS-Proxy.git
+$ cd CORS-proxy
+$ npm install .
 $ node server.js
 
 ## usage
