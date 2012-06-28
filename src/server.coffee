@@ -30,17 +30,20 @@ proxyServer = (req, res, proxy) ->
     console.log 'responding to OPTIONS request'
     res.writeHead(200, cors_headers);
     res.end();
+    return
     
   else  
-    [ignore, host, path] = req.url.match(/\/([^\/]+)(.*)/)
-    [host, port] = host.split(/:/)
+    [ignore, hostname, path] = req.url.match(/\/([^\/]+)(.*)/)
+    [host, port] = hostname.split(/:/)
   
-    console.log "proxying to #{host}#{if port then ":#{port}" else ''}#{path}"
+    console.log "proxying to #{hostname}#{path}"
     
-    # console.log res
-    # res.headers[key] = value for key, value of cors_headers
+    
     res.setHeader(key, value) for key, value of cors_headers
-    req.url = path
+    
+    # req.headers.host = hostname
+    req.url          = path
+    
     
     # Put your custom server logic here, then proxy
     proxy.proxyRequest(req, res, {

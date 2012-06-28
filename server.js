@@ -6,7 +6,7 @@ http = require('http');
 httpProxy = require('http-proxy');
 
 proxyServer = function(req, res, proxy) {
-  var cors_headers, header, headers, host, ignore, key, path, port, value, _i, _len, _ref, _ref1, _ref2;
+  var cors_headers, header, headers, host, hostname, ignore, key, path, port, value, _i, _len, _ref, _ref1, _ref2;
   if (!req.headers.origin) {
     console.log('req.headers.origin not given');
     res.write('hello https\n');
@@ -35,11 +35,11 @@ proxyServer = function(req, res, proxy) {
   if (req.method === 'OPTIONS') {
     console.log('responding to OPTIONS request');
     res.writeHead(200, cors_headers);
-    return res.end();
+    res.end();
   } else {
-    _ref1 = req.url.match(/\/([^\/]+)(.*)/), ignore = _ref1[0], host = _ref1[1], path = _ref1[2];
-    _ref2 = host.split(/:/), host = _ref2[0], port = _ref2[1];
-    console.log("proxying to " + host + (port ? ":" + port : '') + path);
+    _ref1 = req.url.match(/\/([^\/]+)(.*)/), ignore = _ref1[0], hostname = _ref1[1], path = _ref1[2];
+    _ref2 = hostname.split(/:/), host = _ref2[0], port = _ref2[1];
+    console.log("proxying to " + hostname + path);
     for (key in cors_headers) {
       value = cors_headers[key];
       res.setHeader(key, value);
