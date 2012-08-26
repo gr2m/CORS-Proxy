@@ -50,5 +50,6 @@ proxyServer = (req, res, proxy) ->
       host: host,
       port: port
     });
-
-httpProxy.createServer(proxyServer).listen process.env.PORT || 9292
+port = process.env.PORT || process.argv[2] || 9292
+httpProxy.createServer(proxyServer).listen port
+console.log "CORS Proxy started on localhost:" + port
