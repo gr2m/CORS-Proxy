@@ -59,7 +59,7 @@ module.exports = (req, res, proxy) ->
       res.end();
       return;
 
-    console.log "proxying to #{target.host}:#{target.port}#{path}"
+    # console.log "proxying to #{target.host}:#{target.port}#{path}"
     
     
     res.setHeader(key, value) for key, value of cors_headers
