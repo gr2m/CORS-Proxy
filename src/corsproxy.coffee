@@ -38,18 +38,28 @@ module.exports = (req, res, proxy) ->
     # do we have a target configured?
     module.exports.options = module.exports.options || {}
     if module.exports.options.target
-      target = module.exports.options.target
+      target0 = url.parse module.exports.options.target
+      target = {
+        host: target0.hostname,
+        port: target0.port
+      }
       path = req.url
+      req.headers.hsot = target0.hostname;
     else
       [ignore, hostname, path] = req.url.match(/\/([^\/]+)(.*)/)
       [host, port] = hostname.split(':')
+      target = {
+        host: host,
+        port: port
+      }
+      req.headers.host = hostname
 
     unless target
       res.write "Cannot determine target host\n"
       res.end();
       return;
 
-    console.log "proxying to #{target}#{path}"
+    console.log "proxying to #{target.host}:#{target.port}#{path}"
     
     
     res.setHeader(key, value) for key, value of cors_headers
@@ -57,10 +67,5 @@ module.exports = (req, res, proxy) ->
     # req.headers.host = hostname
     req.url          = path
     
-    target = url.parse target
-    target1 = {
-      host: target.hostname,
-      port: target.port
-    }
     # Put your custom server logic here, then proxy
     proxy.proxyRequest(req, res, target);
