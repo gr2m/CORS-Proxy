@@ -1,7 +1,8 @@
 {
   "name": "corsproxy",
   "description": "standalone CORS proxy and library for your convenience",
-  "version": "0.2.0",
+  "version": "0.2.1",
+  "main": "./lib/corsproxy.js",
   "author": {
     "name": "Gregor Martynus",
     "email": "gregor@martynus.net"

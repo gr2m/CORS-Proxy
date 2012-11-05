@@ -58,7 +58,4 @@ module.exports = (req, res, proxy) ->
     
     
     # Put your custom server logic here, then proxy
-    proxy.proxyRequest(req, res, {
-      host: host,
-      port: port || 80
-    });
+    proxy.proxyRequest(req, res, target);
