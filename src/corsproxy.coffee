@@ -1,3 +1,4 @@
+url = require('url');
 http = require('http');
 httpProxy = require('http-proxy');
 
@@ -32,22 +33,22 @@ module.exports = (req, res, proxy) ->
     return
     
   else
-    [ignore, hostname, path] = req.url.match(/\/([^\/]*)(.*)/)
+    # Handle CORS proper.
 
+    # do we have a target configured?
     module.exports.options = module.exports.options || {}
     if module.exports.options.target
-      # use target.host and target.port
-      host = module.exports.options.target.host
-      port = module.exports.options.target.port || 80
+      target = module.exports.options.target
+      path = req.url
     else
-      [host, port] = hostname.split(/:/)
+      [ignore, target, path] = req.url.match(/\/([^\/]+)(.*)/)
 
-    unless host
+    unless target
       res.write "Cannot determine target host\n"
       res.end();
       return;
 
-    console.log "proxying to #{host}:#{port}#{path}"
+    console.log "proxying to #{target}#{path}"
     
     
     res.setHeader(key, value) for key, value of cors_headers
