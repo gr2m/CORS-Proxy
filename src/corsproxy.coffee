@@ -56,6 +56,6 @@ module.exports = (req, res, proxy) ->
     # req.headers.host = hostname
     req.url          = path
     
-    
+    target = url.parse target
     # Put your custom server logic here, then proxy
     proxy.proxyRequest(req, res, target);
