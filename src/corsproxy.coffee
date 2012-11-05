@@ -2,7 +2,7 @@ http = require('http');
 httpProxy = require('http-proxy');
 
 
-proxyServer = (req, res, proxy) ->
+module.exports = (req, res, proxy) ->
   
 
   unless req.headers.origin
@@ -50,6 +50,3 @@ proxyServer = (req, res, proxy) ->
       host: host,
       port: port
     });
-port = process.env.PORT || process.argv[2] || 9292
-httpProxy.createServer(proxyServer).listen port
-console.log "CORS Proxy started on localhost:" + port
