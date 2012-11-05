@@ -2,7 +2,7 @@ http = require('http');
 httpProxy = require('http-proxy');
 
 
-proxyServer = (req, res, proxy) ->
+module.exports = (req, res, proxy) ->
   
 
   unless req.headers.origin
@@ -50,5 +50,3 @@ proxyServer = (req, res, proxy) ->
       host: host,
       port: port || 80
     });
-
-httpProxy.createServer(proxyServer).listen process.env.PORT || 9292
