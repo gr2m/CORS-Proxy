@@ -4,7 +4,6 @@ httpProxy = require('http-proxy');
 
 module.exports = (req, res, proxy) ->
   
-
   unless req.headers.origin
     console.log 'req.headers.origin not given'
     res.write('hello https\n');
@@ -32,11 +31,23 @@ module.exports = (req, res, proxy) ->
     res.end();
     return
     
-  else  
-    [ignore, hostname, path] = req.url.match(/\/([^\/]+)(.*)/)
-    [host, port] = hostname.split(/:/)
-  
-    console.log "proxying to #{hostname}#{path}"
+  else
+    [ignore, hostname, path] = req.url.match(/\/([^\/]*)(.*)/)
+
+    module.exports.options = module.exports.options || {}
+    if module.exports.options.target
+      # use target.host and target.port
+      host = module.exports.options.target.host
+      port = module.exports.options.target.port || 80
+    else
+      [host, port] = hostname.split(/:/)
+
+    unless host
+      res.write "Cannot determine target host\n"
+      res.end();
+      return;
+
+    console.log "proxying to #{host}:#{port}#{path}"
     
     
     res.setHeader(key, value) for key, value of cors_headers
