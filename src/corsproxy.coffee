@@ -44,7 +44,7 @@ module.exports = (req, res, proxy) ->
         port: target0.port
       }
       path = req.url
-      req.headers.hsot = target0.hostname;
+      req.headers.host = target0.hostname;
     else
       [ignore, hostname, path] = req.url.match(/\/([^\/]+)(.*)/)
       [host, port] = hostname.split(':')
