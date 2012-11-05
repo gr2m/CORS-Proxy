@@ -47,7 +47,7 @@ proxyServer = function(req, res, proxy) {
     req.url = path;
     return proxy.proxyRequest(req, res, {
       host: host,
-      port: port
+      port: port || 80
     });
   }
 };

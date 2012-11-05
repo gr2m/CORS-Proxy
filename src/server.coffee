@@ -48,7 +48,7 @@ proxyServer = (req, res, proxy) ->
     # Put your custom server logic here, then proxy
     proxy.proxyRequest(req, res, {
       host: host,
-      port: port
+      port: port || 80
     });
 
 httpProxy.createServer(proxyServer).listen process.env.PORT || 9292
