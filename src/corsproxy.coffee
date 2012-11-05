@@ -41,7 +41,8 @@ module.exports = (req, res, proxy) ->
       target = module.exports.options.target
       path = req.url
     else
-      [ignore, target, path] = req.url.match(/\/([^\/]+)(.*)/)
+      [ignore, hostname, path] = req.url.match(/\/([^\/]+)(.*)/)
+      [host, port] = hostname.split(':')
 
     unless target
       res.write "Cannot determine target host\n"
@@ -57,5 +58,9 @@ module.exports = (req, res, proxy) ->
     req.url          = path
     
     target = url.parse target
+    target1 = {
+      host: target.hostname,
+      port: target.port
+    }
     # Put your custom server logic here, then proxy
     proxy.proxyRequest(req, res, target);

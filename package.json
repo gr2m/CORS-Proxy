@@ -12,7 +12,7 @@
     "email": "jan@apache.org"
   },
   "dependencies": {
-    "http-proxy"    : "~0.8"
+    "http-proxy": "~0.8"
   },
   "bin": {
     "corsproxy": "./bin/index.js"
