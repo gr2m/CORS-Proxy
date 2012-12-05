@@ -4,13 +4,6 @@ httpProxy = require('http-proxy');
 
 
 module.exports = (req, res, proxy) ->
-  
-  unless req.headers.origin
-    console.log 'req.headers.origin not given'
-    res.write('hello https\n');
-    res.end();
-    return
-  
     
   if req.headers['access-control-request-headers']
     headers = req.headers['access-control-request-headers']
@@ -23,7 +16,7 @@ module.exports = (req, res, proxy) ->
     'access-control-max-age'           : '86400' # 24 hours
     'access-control-allow-headers'     : headers
     'access-control-allow-credentials' : 'true'
-    'access-control-allow-origin'      : req.headers.origin
+    'access-control-allow-origin'      : req.headers.origin || '*'
   
   
   if req.method is 'OPTIONS'
