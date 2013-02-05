@@ -1,7 +1,7 @@
 {
   "name": "corsproxy",
   "description": "standalone CORS proxy and library for your convenience",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "main": "./lib/corsproxy.js",
   "author": {
     "name": "Gregor Martynus",
