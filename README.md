@@ -32,10 +32,7 @@ With custom target:
     var cors_proxy = require("corsproxy");
     var http_proxy = require("http-proxy");
     cors_proxy.options = {
-        target: {
-            host:"0.0.0.0",
-            port:5984
-        }
+         target: "http://0.0.0.0:5984"
     };
     http_proxy.createServer(cors_proxy).listen(1234);
 
