@@ -39,7 +39,7 @@ module.exports = (req, res, proxy) ->
       path = req.url
       req.headers.host = target0.hostname;
     else
-      [ignore, hostname, path] = req.url.match(/\/([^\/]+)(.*)/)
+      [ignore, hostname, path] = req.url.match(/\/([^\/]*)(.*)/)
       [host, port] = hostname.split(':')
       target = {
         host: host,
@@ -47,7 +47,7 @@ module.exports = (req, res, proxy) ->
       }
       req.headers.host = hostname
 
-    unless target
+    unless target and target.host and target.port
       res.write "Cannot determine target host\n"
       res.end();
       return;
