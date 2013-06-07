@@ -43,7 +43,7 @@ module.exports = (req, res, proxy) ->
       [host, port] = hostname.split(':')
       target = {
         host: host,
-        port: port
+        port: port || 80
       }
       req.headers.host = hostname
 
