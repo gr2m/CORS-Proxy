@@ -4,7 +4,7 @@ httpProxy = require('http-proxy');
 
 
 module.exports = (req, res, proxy) ->
-    
+
   if req.headers['access-control-request-headers']
     headers = req.headers['access-control-request-headers']
   else
@@ -17,14 +17,14 @@ module.exports = (req, res, proxy) ->
     'access-control-allow-headers'     : headers
     'access-control-allow-credentials' : 'true'
     'access-control-allow-origin'      : req.headers.origin || '*'
-  
-  
+
+
   if req.method is 'OPTIONS'
     console.log 'responding to OPTIONS request'
     res.writeHead(200, cors_headers);
     res.end();
     return
-    
+
   else
     # Handle CORS proper.
 
@@ -46,19 +46,20 @@ module.exports = (req, res, proxy) ->
         port: port || 80
       }
       req.headers.host = hostname
-
+      if target0.auth
+         req.headers.authorization = 'Basic ' + new Buffer(target0.auth).toString('base64');
     unless target and target.host and target.port
       res.write "Cannot determine target host\n"
       res.end();
       return;
 
     # console.log "proxying to #{target.host}:#{target.port}#{path}"
-    
-    
+
+
     res.setHeader(key, value) for key, value of cors_headers
-    
+
     # req.headers.host = hostname
     req.url          = path
-    
+
     # Put your custom server logic here, then proxy
     proxy.proxyRequest(req, res, target);
