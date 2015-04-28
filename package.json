@@ -1,6 +1,6 @@
 {
   "name": "corsproxy",
-  "description": "standalone CORS proxy and library for your convenience",
+  "description": "standalone CORS proxy",
   "version": "1.0.0",
   "main": "./index.js",
   "author": {
@@ -29,5 +29,6 @@
   },
   "devDependencies": {
     "standard": "^3.7.2"
-  }
+  },
+  "license": "MIT"
 }
