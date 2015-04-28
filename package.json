@@ -1,28 +1,33 @@
 {
   "name": "corsproxy",
   "description": "standalone CORS proxy and library for your convenience",
-  "version": "0.2.14",
-  "main": "./lib/corsproxy.js",
+  "version": "1.0.0",
+  "main": "./index.js",
   "author": {
     "name": "Gregor Martynus",
     "email": "gregor@martynus.net"
   },
-  "contributors": {
-    "name": "Jan Lehnardt",
-    "email": "jan@apache.org"
-  },
   "dependencies": {
+    "good": "^6.1.2",
+    "good-console": "^5.0.0",
+    "hapi": "^8.4.0",
     "http-proxy": "~0.10"
   },
   "bin": {
-    "corsproxy": "./bin/index.js"
+    "corsproxy": "./bin/corsproxy"
   },
-  "engines": {
-    "node": ">=0.6.x",
-    "npm": ">=1.1.x"
+  "scripts": {
+    "start": "./bin/corsproxy",
+    "test": "standard"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/gr2m/CORS-Proxy"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "devDependencies": {
+    "standard": "^3.7.2"
   }
 }
