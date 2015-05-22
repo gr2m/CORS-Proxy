@@ -15,8 +15,8 @@ corsproxy
 The cors proxy will start at http://localhost:1337.
 To access another domain, use the domain name (including port) as the first folder, e.g.
 
-- http://localhost:9292/localhost:3000/sign_in
-- http://localhost:9292/my.domain.com/path/to/resource
+- http://localhost:1337/localhost:3000/sign_in
+- http://localhost:1337/my.domain.com/path/to/resource
 - etc etc
 
 ## License
