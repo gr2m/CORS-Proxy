@@ -35,6 +35,7 @@ server.route({
       mapUri: function(request, callback) {
         request.host = request.params.host
         request.path = request.path.substr(request.params.host.length + 1)
+        request.headers['host'] = request.host; 
         console.log('proxy to http://' + request.host + request.path)
         callback(null, 'http://' + request.host + request.path, request.headers);
       }
