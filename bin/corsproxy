@@ -36,8 +36,9 @@ server.route({
         request.host = request.params.host
         request.path = request.path.substr(request.params.host.length + 1)
         request.headers['host'] = request.host; 
+        var query = request.url.search ? request.url.search : '';
         console.log('proxy to http://' + request.host + request.path)
-        callback(null, 'http://' + request.host + request.path, request.headers);
+        callback(null, 'http://' + request.host + request.path + query, request.headers);
       }
     }
   }
