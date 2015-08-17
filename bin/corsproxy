@@ -8,12 +8,15 @@ var loggerOptions = require('../lib/logger-options')
 var server = new Hapi.Server({})
 var port = parseInt(process.env.CORSPROXY_PORT || process.env.PORT || 1337, 10)
 
-server.connection({
-  port: port
-})
+var proxy = server.connection({ port: port, labels: ['proxy'] })
+
+server.register(require('inert'), function () {})
+server.register(require('h2o2'), function () {})
 
 // cors plugin
-server.register(plugin, function (error) {
+server.register(plugin, {
+  select: ['proxy']
+}, function (error) {
   if (error) server.log('error', error)
 })
 
@@ -26,33 +29,33 @@ server.register({
 })
 
 // proxy route
-server.route({
+proxy.route({
   method: '*',
   path: '/{host}/{path*}',
   handler: {
     proxy: {
       passThrough: true,
-      mapUri: function(request, callback) {
+      mapUri: function (request, callback) {
         request.host = request.params.host
         request.path = request.path.substr(request.params.host.length + 1)
-        request.headers['host'] = request.host;
-        var query = request.url.search ? request.url.search : '';
+        request.headers['host'] = request.host
+        var query = request.url.search ? request.url.search : ''
         console.log('proxy to http://' + request.host + request.path)
-        callback(null, 'http://' + request.host + request.path + query, request.headers);
+        callback(null, 'http://' + request.host + request.path + query, request.headers)
       }
     }
   }
 })
 
 // default route
-server.route({
+proxy.route({
   method: 'GET',
   path: '/',
   handler: {
     file: 'public/index.html'
   }
 })
-server.route({
+proxy.route({
   method: 'GET',
   path: '/favicon.ico',
   handler: {
@@ -60,9 +63,52 @@ server.route({
   }
 })
 
+if (process.env.DEBUG) {
+  var testport = port + 1
+  var test = server.connection({ port: testport, labels: ['test'] })
+
+  server.register(require('vision'), function (error) {
+    if (error) {
+      throw error
+    }
+
+    server.views({
+      engines: { ejs: require('ejs') },
+      path: 'public/test'
+    })
+  })
+
+  test.route({
+    method: 'GET',
+    path: '/favicon.ico',
+    handler: {
+      file: 'public/favicon.ico'
+    }
+  })
+  test.route({
+    method: 'GET',
+    path: '/test.json',
+    handler: {
+      file: 'public/test/test.json'
+    }
+  })
+
+  test.route({
+    method: 'GET',
+    path: '/',
+    handler: function (request, reply) {
+      reply.view('index', {
+        proxyPort: proxy.info.port,
+        testPort: test.info.port
+      })
+    }
+  })
+
+  server.log('info', 'Debug server starting at: ' + test.info.uri)
+}
 
 server.start(function (error) {
   if (error) server.log('error', error)
 
-  server.log('info', 'CORS Proxy running at:' + server.info.uri)
+  server.log('info', 'CORS Proxy running at: ' + server.info.uri)
 })
