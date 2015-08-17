@@ -7,6 +7,7 @@
     "email": "gregor@martynus.net"
   },
   "dependencies": {
+    "ejs": "^2.3.3",
     "good": "^6.3.0",
     "good-console": "^5.0.3",
     "h2o2": "^4.0.1",
@@ -20,7 +21,6 @@
     "chai": "^3.2.0",
     "chai-as-promised": "^5.1.0",
     "colors": "^1.1.2",
-    "ejs": "^2.3.3",
     "mocha": "^2.2.5",
     "request": "^2.60.0",
     "sauce-connect-launcher": "^0.12.0",
