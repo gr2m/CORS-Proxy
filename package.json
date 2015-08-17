@@ -16,17 +16,29 @@
     "vision": "^3.0.0"
   },
   "devDependencies": {
+    "chai": "^3.2.0",
+    "chai-as-promised": "^5.1.0",
+    "colors": "^1.1.2",
     "ejs": "^2.3.3",
+    "mocha": "^2.2.5",
+    "sauce-connect-launcher": "^0.12.0",
+    "semantic-release": "^4.0.3",
     "standard": "^5.1.0",
-    "semantic-release": "^4.0.3"
+    "sv-selenium": "^0.2.6",
+    "wd": "^0.3.12"
   },
   "bin": {
     "corsproxy": "./bin/corsproxy"
   },
   "scripts": {
+    "install_selenium_and_chromedriver": "install_chromedriver && install_selenium",
+    "kill_selenium": "kill_selenium",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "start": "./bin/corsproxy",
-    "test": "standard",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "start_app": "./bin/start-app",
+    "start_selenium_with_chromedriver": "start_selenium_with_chromedriver",
+    "test": "standard && ./bin/test-background",
+    "test:mocha": "mocha test/test-*.js"
   },
   "repository": {
     "type": "git",
