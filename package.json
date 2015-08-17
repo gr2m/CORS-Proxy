@@ -11,6 +11,7 @@
     "good-console": "^5.0.3",
     "h2o2": "^4.0.1",
     "hapi": "^9.0.2",
+    "hapi-cors-headers": "^1.0.0",
     "http-proxy": "~1.11",
     "inert": "^3.0.1",
     "vision": "^3.0.0"
