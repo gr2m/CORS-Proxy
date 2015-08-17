@@ -9,8 +9,16 @@
   "dependencies": {
     "good": "^6.1.2",
     "good-console": "^5.0.0",
-    "hapi": "^8.4.0",
-    "http-proxy": "~0.10"
+    "h2o2": "^4.0.1",
+    "hapi": "^9.0.2",
+    "http-proxy": "~0.10",
+    "inert": "^3.0.1",
+    "vision": "^3.0.0"
+  },
+  "devDependencies": {
+    "ejs": "^2.3.3",
+    "standard": "^3.7.2",
+    "semantic-release": "^4.0.3"
   },
   "bin": {
     "corsproxy": "./bin/corsproxy"
@@ -23,13 +31,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gr2m/CORS-Proxy"
-  },
-  "engines": {
-    "node": "0.10.x"
-  },
-  "devDependencies": {
-    "standard": "^3.7.2",
-    "semantic-release": "^4.0.3"
   },
   "license": "MIT"
 }
