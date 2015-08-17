@@ -7,17 +7,17 @@
     "email": "gregor@martynus.net"
   },
   "dependencies": {
-    "good": "^6.1.2",
-    "good-console": "^5.0.0",
+    "good": "^6.3.0",
+    "good-console": "^5.0.3",
     "h2o2": "^4.0.1",
     "hapi": "^9.0.2",
-    "http-proxy": "~0.10",
+    "http-proxy": "~1.11",
     "inert": "^3.0.1",
     "vision": "^3.0.0"
   },
   "devDependencies": {
     "ejs": "^2.3.3",
-    "standard": "^3.7.2",
+    "standard": "^5.1.0",
     "semantic-release": "^4.0.3"
   },
   "bin": {
