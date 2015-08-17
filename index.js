@@ -1,4 +1,4 @@
-var addCorsHeaders = require('./lib/add-cors-headers')
+var addCorsHeaders = require('hapi-cors-headers')
 var pkg = require('./package.json')
 
 function corsPlugin (server, options, next) {
