@@ -7,8 +7,8 @@ var loggerOptions = require('../lib/logger-options')
 
 var server = new Hapi.Server({})
 var port = parseInt(process.env.CORSPROXY_PORT || process.env.PORT || 1337, 10)
-
-var proxy = server.connection({ port: port, labels: ['proxy'] })
+var host = (process.env.CORSPROXY_HOST || 'localhost');
+var proxy = server.connection({ port: port, labels: ['proxy'], host: host})
 
 server.register(require('inert'), function () {})
 server.register(require('h2o2'), function () {})
@@ -65,7 +65,7 @@ proxy.route({
 
 if (process.env.DEBUG) {
   var testport = port + 1
-  var test = server.connection({ port: testport, labels: ['test'] })
+  var test = server.connection({ port: testport, labels: ['test'], host: host })
 
   server.register(require('vision'), function (error) {
     if (error) {
