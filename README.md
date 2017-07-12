@@ -29,6 +29,8 @@ To access another domain, use the domain name (including port) as the first fold
 - http://localhost:1337/my.domain.com/path/to/resource
 - etc etc
 
+By default the cors proxy will only answer requests sent to localhost. To use another domain (e.g. machine name) set an enviroment variable CORSPROXY_HOST to the required value before launching.
+
 ## License
 
 MIT
