@@ -20,6 +20,18 @@ corsproxy
 # with custom payload max bytes set to 10MB (1MB by default): CORSPROXY_MAX_PAYLOAD=10485760 corsproxy
 ```
 
+### Docker
+
+It is also possible to run the cors proxy in a docker container:
+
+```
+# Build image
+docker build -t corsproxy .
+
+# Run container
+docker run -p 1337:1337 --name corsproxy -d corsproxy
+```
+
 ## Usage
 
 The cors proxy will start at http://localhost:1337.
